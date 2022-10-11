@@ -3,11 +3,10 @@
     <h1>Posts</h1>
 
     <ul>
-      <li
-        v-for="post in posts"
-        :key="post.id"
-      >
-        <RouterLink :to="`/postDetail/${ post.id }`">{{ post.title }}</RouterLink>
+      <li v-for="post in posts" :key="post.id">
+        <RouterLink :to="`/postDetail/${post.id}`">{{
+          post.title
+        }}</RouterLink>
       </li>
     </ul>
 
@@ -15,11 +14,11 @@
 
     <div>
       <button
-        @click="increaseCounter(1)"
+        @click="counter.increment"
         class="counter-button"
-        :class="{ 'yellow' : oddOrEven === 'odd' }"
+        :class="{ yellow: counter.oddOrEven === 'Odd' }"
       >
-        {{ counterData.count }}
+        {{ counter.count }}
       </button>
     </div>
   </div>
@@ -30,35 +29,34 @@
   imports
 */
 
-  import { ref } from 'vue'
-  import { useCounter } from '@/use/useCounter'
-  import { vAutofocus } from '@/directives/vAutofocus'
+import { ref } from 'vue';
+import { useCounterStore } from '@/stores/counter';
+import { vAutofocus } from '@/directives/vAutofocus';
 
 /*
   posts
 */
 
-  const posts = ref([
-    {
-      id: 'id1',
-      title: 'Post 1'
-    },
-    {
-      id: 'id2',
-      title: 'Post 2'
-    },
-    {
-      id: 'id3',
-      title: 'Post 3'
-    }
-  ])
+const posts = ref([
+  {
+    id: 'id1',
+    title: 'Post 1',
+  },
+  {
+    id: 'id2',
+    title: 'Post 2',
+  },
+  {
+    id: 'id3',
+    title: 'Post 3',
+  },
+]);
 
 /*
   counter button
 */
 
-  const { counterData, increaseCounter, oddOrEven } = useCounter()
-
+const counter = useCounterStore();
 </script>
 
 <style scoped>
@@ -72,5 +70,5 @@ ul {
 }
 .counter-button.yellow {
   background-color: yellow;
-} 
+}
 </style>

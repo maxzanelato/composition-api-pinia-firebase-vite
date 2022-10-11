@@ -2,23 +2,21 @@
   <div class="home">
     <h2 ref="appTitleRef">{{ appTitle }}</h2>
 
-    <h3>{{ counterData.title }}:</h3>
+    <h3>{{ counter.title }}</h3>
 
     <div>
-      <button @click="decreaseCounter(2)" class="btn">--</button>
-      <button @click="decreaseCounter(1)" class="btn">-</button>
-      <span class="counter">{{ counterData.count }}</span>
-      <button @click="increaseCounter(1, $event)" class="btn">
-        +
-      </button>
-      <button @click="increaseCounter(2)" class="btn">++</button>
+      <button class="btn" @click="counter.doubleDecrement">--</button>
+      <button class="btn" @click="counter.decrement">-</button>
+      <span class="counter">{{ counter.count }}</span>
+      <button class="btn" @click="counter.increment">+</button>
+      <button class="btn" @click="counter.doubleIncrement">++</button>
     </div>
 
-    <p>This counter is {{ oddOrEven }}</p>
+    <p>This counter is {{ counter.oddOrEven }}</p>
 
     <div class="edit">
       <h4>Edit counter title:</h4>
-      <input v-model="counterData.title" type="text" v-autofocus />
+      <input type="text" v-autofocus v-model="counter.title" />
     </div>
   </div>
 </template>
@@ -29,7 +27,7 @@
 */
 
 import { ref, onMounted } from 'vue';
-import { useCounter } from '@/use/useCounter';
+import { useCounterStore } from '@/stores/counter';
 import { vAutofocus } from '@/directives/vAutofocus';
 
 /*
@@ -46,49 +44,8 @@ onMounted(() => {
   );
 });
 
-/*
-  counter
-*/
-
-const { counterData, oddOrEven, increaseCounter, decreaseCounter } =
-  useCounter();
+const counter = useCounterStore();
 </script>
-
-<!--
-<script>
-export default {
-  data() {
-    return {
-      count: 0
-    }
-  },
-  computed: {
-    myComputedProperty() {
-      // perform logic based on a data property
-      return 'my result'
-    }
-  },
-  watch: {
-    count(newCount, oldCount) {
-      if (newCount == 20) alert('asdfasd')
-    }
-  },
-  mounted() {
-    console.log('mounted')
-  },
-  unmounted() {
-    console.log('unmounted')
-  },
-  directives: {
-    autofocus: {
-      mounted(el) {
-        el.focus()
-      }
-    }
-  }
-}
-</script>
--->
 
 <style>
 .home {
